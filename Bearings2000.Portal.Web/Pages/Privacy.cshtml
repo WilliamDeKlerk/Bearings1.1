@@ -1,4 +1,5 @@
 ﻿@page
+@using Bearings2000.Portal.Web.Models
 @model PrivacyModel
 @{
     ViewData["Title"] = "Privacy Policy";
@@ -6,3 +7,11 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+@foreach (var item in Model.Customers)
+{
+    <div>
+        @Html.Label(item.CustomerName)  
+    </div>
+  
+   
+}
