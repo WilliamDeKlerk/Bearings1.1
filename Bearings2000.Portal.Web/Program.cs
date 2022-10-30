@@ -8,7 +8,7 @@ using Bearings2000.Portal.Web.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 //primary logging dir
-builder.Logging.AddFile("Logs/myapp-{Date}.txt");
+builder.Logging.AddFile("Logs/Bearings2000_Log-{Date}.txt");
 
 var connectionString = builder.Configuration.GetConnectionString("Bearings2000PortalWebContextConnection") ?? throw new InvalidOperationException("Connection string 'Bearings2000PortalWebContextConnection' not found.");
 
@@ -21,7 +21,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddTransient<IDataService,DataService>();
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services
+    .AddRazorPages()
+    .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
 
 
@@ -35,6 +37,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -42,7 +46,8 @@ app.UseRouting();
 app.UseAuthentication();;
 
 app.UseAuthorization();
-
+app.MapControllers();
+app.MapDefaultControllerRoute();
 app.MapRazorPages();
 
 app.Run();
