@@ -6,6 +6,10 @@ using Bearings2000.Portal.Web.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+//primary logging dir
+builder.Logging.AddFile("Logs/myapp-{Date}.txt");
+
 var connectionString = builder.Configuration.GetConnectionString("Bearings2000PortalWebContextConnection") ?? throw new InvalidOperationException("Connection string 'Bearings2000PortalWebContextConnection' not found.");
 
 builder.Services.AddDbContext<BearingsContext>(options =>
