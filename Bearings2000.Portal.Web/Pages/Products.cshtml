@@ -1,0 +1,34 @@
+﻿@page
+@model Bearings2000.Portal.Web.Pages.ProductsModel
+@using Bearings2000.Portal.Web.Models
+@{
+    ViewData["Title"] = "Products POC page";
+}
+@(Html.DevExtreme().DataGrid<Product>()
+    .ShowBorders(true)
+    .DataSource(d => d.Mvc().Controller("Products").LoadAction("GetProducts").Key("ProductId"))
+    .Columns(columns =>
+    {
+        columns.AddFor(m => m.ProductId);
+        columns.AddFor(m => m.ProductCode);
+        columns.AddFor(m => m.ProductName);
+        columns.AddFor(m => m.ProductDescription);
+        columns.AddFor(m => m.QuotedPrice);
+    })
+    .Paging(p => p.PageSize(10))
+    .FilterRow(f => f.Visible(true))
+    .HeaderFilter(f => f.Visible(true))
+    .GroupPanel(p => p.Visible(true))
+    .Grouping(g => g.AutoExpandAll(false))
+    .RemoteOperations(true)
+    .Summary(s => s
+        .TotalItems(totalItems =>
+        {
+            totalItems.AddFor(m => m.ProductCode).SummaryType(SummaryType.Count);
+        })
+        .GroupItems(groupItems =>
+        {
+            groupItems.Add().SummaryType(SummaryType.Count);
+        })
+    )
+    )

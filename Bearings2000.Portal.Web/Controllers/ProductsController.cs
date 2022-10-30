@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Bearings2000.Portal.Web.Models;
+using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Mvc;
 
 namespace Bearings2000.Portal.Web.Controllers
 {
@@ -20,12 +22,19 @@ namespace Bearings2000.Portal.Web.Controllers
             _context = context;
         }
 
-        // GET: api/Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public  object GetProducts(DataSourceLoadOptions loadOptions)
         {
-            return await _context.Products.ToListAsync();
+       
+            return DataSourceLoader.Load(_context.Products.ToList(), loadOptions);
         }
+
+        // GET: api/Products
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        //{
+        //    return await _context.Products.ToListAsync();
+        //}
 
         // GET: api/Products/5
         [HttpGet("{id}")]
