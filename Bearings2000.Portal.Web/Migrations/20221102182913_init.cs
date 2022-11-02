@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Bearings2000.Portal.Web.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,6 +28,29 @@ namespace Bearings2000.Portal.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AccountNumberRegistration = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CellNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateProcessed = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateLastLogin = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CanCreateEnquiry = table.Column<bool>(type: "bit", nullable: true),
+                    CanViewDocuments = table.Column<bool>(type: "bit", nullable: true),
+                    CanViewTracking = table.Column<bool>(type: "bit", nullable: true),
+                    IndividualPricing = table.Column<bool>(type: "bit", nullable: true),
+                    CustomerPricing = table.Column<bool>(type: "bit", nullable: true),
+                    ShowPrice = table.Column<bool>(type: "bit", nullable: true),
+                    ShowActualQuantity = table.Column<bool>(type: "bit", nullable: true),
+                    ShowNoQuantity = table.Column<bool>(type: "bit", nullable: true),
+                    ShowHighlevelQuantity = table.Column<bool>(type: "bit", nullable: true),
+                    ShowMaxAllowedToViewQuantity = table.Column<bool>(type: "bit", nullable: true),
+                    UserIdentifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserPin = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserTypeId = table.Column<int>(type: "int", nullable: true),
+                    CustomerId = table.Column<int>(type: "int", nullable: true),
+                    UserStatusId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),

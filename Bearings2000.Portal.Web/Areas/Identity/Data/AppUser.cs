@@ -16,7 +16,7 @@ namespace Bearings2000.Portal.Web.Areas.Identity.Data
         public string? FirstName { get; set; }
         public string? Surname { get; set; }
         public string? CellNumber { get; set; }
-        public int? UserStatusId { get; set; }
+
         public DateTime? DateCreated { get; set; }
         public DateTime? DateProcessed { get; set; }
         public DateTime? DateLastLogin { get; set; }
@@ -35,13 +35,10 @@ namespace Bearings2000.Portal.Web.Areas.Identity.Data
         public string? UserPin { get; set; }
         public int? UserTypeId { get; set; }
         
-        [ForeignKey("CustomerId")]
-        public virtual Customer? Customer { get; set; }
-        [ForeignKey("UserStatusId")]
-        public virtual UserStatus? UserStatus { get; set; }
-     
-        public virtual ICollection<Enquire> Enquires { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; }
+        public int?   CustomerId { get; set; }
+
+        public  int? UserStatusId { get; set; }
+      
     }
 }

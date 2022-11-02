@@ -11,7 +11,6 @@ namespace Bearings2000.Portal.Web.Models
             EnquiryDetails = new HashSet<EnquiryDetail>();
             OrderDetails = new HashSet<OrderDetail>();
         }
-        public AppUser AppUser { get; set; }
         public int EquiryId { get; set; }
         public int? UserId { get; set; }
         public int? CustomerId { get; set; }

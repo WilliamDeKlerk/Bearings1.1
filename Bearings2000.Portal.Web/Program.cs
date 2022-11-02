@@ -1,3 +1,4 @@
+using Bearings2000.Portal.Web.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Bearings2000.Portal.Web.Data;
@@ -15,7 +16,7 @@ var connectionString = builder.Configuration.GetConnectionString("Bearings2000Po
 builder.Services.AddDbContext<BearingsContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<BearingsContext>();
 
 builder.Services.AddTransient<IDataService,DataService>();

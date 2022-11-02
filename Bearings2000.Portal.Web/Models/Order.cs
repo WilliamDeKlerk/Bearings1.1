@@ -8,7 +8,6 @@ namespace Bearings2000.Portal.Web.Models
     {
         public int OrderId { get; set; }
         public int? UserId { get; set; }
-        public AppUser AppUser { get; set; }
         public int? CustomerId { get; set; }
         public DateTime? OrderCreatedDate { get; set; }
         public DateTime? OrderProcessedDate { get; set; }
