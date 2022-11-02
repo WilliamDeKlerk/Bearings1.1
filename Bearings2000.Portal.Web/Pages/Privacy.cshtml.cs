@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Bearings2000.Portal.Web.Pages
 {
-    [Authorize]
+    //[Authorize]
     public class PrivacyModel : PageModel
     {
         private readonly ILogger<PrivacyModel> _logger;
         private readonly IDataService _dataService;
-        public List<Customer> Customers { get; set; }
+       
        
 
         public PrivacyModel(ILogger<PrivacyModel> logger, IDataService dataService)
@@ -23,7 +23,7 @@ namespace Bearings2000.Portal.Web.Pages
 
         public void OnGet()
         {
-            Customers = _dataService.GetCustomers();
+           
         }
     }
 }

@@ -1,2 +1,43 @@
+
+
+html {
+    min-height: 100%;
+}
 body {
+   
+    background-image: url(../content/images/hero-image.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.header-logo {
+    background: url('../content/images/bearings-logos.png') no-repeat left;
+    height: 45px;
+    width: 137px;
+    
+}
+
+@media (max-width: 359px) {
+    .header-logo {
+        background: url('../content/images/logo-small.jpg') no-repeat center;
+        width: 26px;
+    }
+}
+
+
+
+
+/* Main Menu */
+.header-menu {
+    background: rgb(45,64,104);
+    background: linear-gradient(360deg, rgba(45,64,104,0.9588877787443102) 0%, rgba(45,53,104,1) 48%, rgba(45,64,104,0.8216328767835259) 100%);
+    border-style: none !important;
+    height: 3.13rem;
+}
+
+.backgroundcolor {
+    background: rgba(45,64,104,0.8);
+    border-style: dashed;
+    border-color: #fff;
+    color: #fff;
 }
