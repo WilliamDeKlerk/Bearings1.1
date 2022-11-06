@@ -1,0 +1,81 @@
+﻿@page
+@using DevExtreme.AspNet.Mvc
+@using Bearings2000.Portal.Web.Models
+@using Bearings2000.Portal.Web.Areas.Identity.Data
+@model UserManagerModel
+@{
+}
+@{
+    ViewData["Title"] = "User Manager";
+    ViewData["ActivePage"] = ManageNavPages.UserManager;
+}
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+@(Html.DevExtreme().DataGrid<AppUser>()
+    .ID("gridAppUserContainer")
+    .ShowBorders(true)
+    .DataSource(d => d.Mvc()
+        .Controller("Identity")
+        .LoadAction("GetUsers")
+        .UpdateAction("PutUser")
+        .InsertAction("PostUser")
+        .DeleteAction("DeleteUser")
+        .Key("Id"))
+
+    .Columns(columns =>
+    {
+
+        columns.AddFor(m => m.IDNumber);
+        columns.AddFor(m => m.FirstName);
+        columns.AddFor(m => m.Surname);
+        columns.AddFor(m => m.Email);
+        columns.AddFor(m => m.PhoneNumber);
+        columns.AddFor(m => m.UserPin).Visible(false);
+        columns.AddFor(m => m.Comment)
+            .Visible(false)
+            .FormItem(i => i
+                .Editor(e => e
+                    .TextArea()
+                    .Height(100))
+                .ColSpan(2)
+            );
+        columns.AddFor(m => m.CanCreateEnquiry).Visible(false).FormItem(i => i.Editor(e => e.CheckBox()));
+        columns.AddFor(m => m.CanViewDocuments).Visible(false).FormItem(i => i.Editor(e => e.CheckBox()));
+        columns.AddFor(m => m.CanViewTracking).Visible(false).FormItem(i => i.Editor(e => e.CheckBox()));
+        columns.AddFor(m => m.IndividualPricing).Visible(false).FormItem(i => i.Editor(e => e.CheckBox()));
+        columns.AddFor(m => m.CustomerPricing).Visible(false).FormItem(i => i.Editor(e => e.CheckBox()));
+        columns.AddFor(m => m.ShowPrice).Visible(false).FormItem(i => i.Editor(e => e.CheckBox()));
+        columns.AddFor(m => m.ShowActualQuantity).Visible(false).FormItem(i => i.Editor(e => e.CheckBox()));
+        columns.AddFor(m => m.ShowNoQuantity).Visible(false).FormItem(i => i.Editor(e => e.CheckBox()));
+        columns.AddFor(m => m.ShowHighlevelQuantity).Visible(false).FormItem(i => i.Editor(e => e.CheckBox()));
+        columns.AddFor(m => m.ShowMaxAllowedToViewQuantity).Visible(false).FormItem(i => i.Editor(e => e.CheckBox()));
+
+    })
+    .Paging(p => p.PageSize(10))
+    .SearchPanel(s => s
+        .Visible(true)
+        .HighlightCaseSensitive(true)
+    )
+    .FilterRow(f => f.Visible(true))
+    .Editing(editing =>
+    {
+        editing.Mode(GridEditMode.Form);
+        editing.AllowUpdating(true);
+        editing.AllowAdding(true);
+        editing.AllowDeleting(true);
+    })
+    .HeaderFilter(f => f.Visible(true))
+    .GroupPanel(p => p.Visible(true))
+    .Grouping(g => g.AutoExpandAll(false))
+    .RemoteOperations(true)
+    .Summary(s => s
+        .TotalItems(totalItems =>
+        {
+            totalItems.AddFor(m => m.Id).SummaryType(SummaryType.Count);
+        })
+        .GroupItems(groupItems =>
+        {
+            groupItems.Add().SummaryType(SummaryType.Count);
+        })
+    ).RemoteOperations(true)
+    )

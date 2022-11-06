@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Bearings2000.Portal.Web.Data;
 using Bearings2000.Portal.Web.Models;
 using Bearings2000.Portal.Web.Services;
+using Microsoft.AspNetCore.Builder;
 
+var MyAllowSpecificOrigins = "CorsPolicy";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +21,11 @@ builder.Services.AddDbContext<BearingsContext>(options =>
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<BearingsContext>();
 
-builder.Services.AddTransient<IDataService,DataService>();
+builder.Services.AddTransient<IDataService, DataService>();
+
+builder.Services.AddControllers(
+    options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+
 
 // Add services to the container.
 builder.Services
@@ -27,7 +33,26 @@ builder.Services
     .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
 
+//builder.Services.AddCors(opt =>
+//{
+//    opt.AddPolicy("CorsPolicy", policy =>
+//    {
+//        policy
+//            .AllowAnyMethod()
+//            .AllowAnyHeader()
+//            .AllowAnyOrigin()
+//            .AllowCredentials()
+//            .WithExposedHeaders("WWW-Authenticate", "Pagination", "Set-Cookie")
+//            .WithHeaders("Content-Type", "Vary")
+//            .WithMethods(new String[] { "GET", "POST" })
+//            .WithOrigins(
+//               "https://localhost:7236", 
+//                "http://localhost:5079"
 
+//            );
+
+//    });
+//});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -41,14 +66,21 @@ if (!app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+
 
 app.UseRouting();
-app.UseAuthentication();;
+app.UseStaticFiles();
+//app.UseCors("CorsPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapDefaultControllerRoute();
+app.UseEndpoints(endpoints => {
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
 app.MapRazorPages();
 
 app.Run();

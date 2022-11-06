@@ -119,5 +119,8 @@ namespace  Bearings2000.Portal.Web.Areas.Identity.Pages.Account.Manage
                 ?? System.IO.Path.GetFileNameWithoutExtension(viewContext.ActionDescriptor.DisplayName);
             return string.Equals(activePage, page, StringComparison.OrdinalIgnoreCase) ? "active" : null;
         }
+        public static string UserManager => "UserManager";
+        public static string UserManagerNavClass(ViewContext viewContext) => PageNavClass(viewContext, UserManager);
+        
     }
 }

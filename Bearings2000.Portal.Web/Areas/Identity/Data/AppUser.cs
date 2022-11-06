@@ -15,7 +15,8 @@ namespace Bearings2000.Portal.Web.Areas.Identity.Data
 
         public string? FirstName { get; set; }
         public string? Surname { get; set; }
-        public string? CellNumber { get; set; }
+        [Display(Name = "ID Number")]
+        public string? IDNumber { get; set; }
 
         public DateTime? DateCreated { get; set; }
         public DateTime? DateProcessed { get; set; }

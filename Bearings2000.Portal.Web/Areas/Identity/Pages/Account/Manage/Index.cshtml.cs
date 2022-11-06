@@ -65,11 +65,16 @@ namespace Bearings2000.Portal.Web.Areas.Identity.Pages.Account.Manage
             public string FirstName { get; set; }
             [Display(Name = "Surname")]
             public string Surname { get; set; }
+            [Display(Name = "ID Number")]
+            public string IDNumber { get; set; }
             [Display(Name = "Comment")]
             public string Comment { get; set; }
 
             [Display(Name = "Can Create Enquiry")]
-            public bool CanCreateEnquiry { get; set; } = true;
+            public bool CanCreateEnquiry { get; set; } 
+
+            [Display(Name = "Can View Tracking")]
+            public bool CanViewTracking { get; set; } 
 
             [Display(Name = "Can View Documents")]
             public bool CanViewDocuments { get; set; }
@@ -111,10 +116,48 @@ namespace Bearings2000.Portal.Web.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             //customer fields
             var firstName = user.FirstName;
+            var surName = user.Surname;
+            var idNumber = user.IDNumber;
 
             var canCreateEnquiry = false;
             if (user.CanCreateEnquiry.HasValue)
                 canCreateEnquiry = user.CanCreateEnquiry.Value;
+
+            var canViewDocuments = false;
+            if (user.CanViewDocuments.HasValue)
+                canViewDocuments = user.CanViewDocuments.Value;
+
+            var canViewTracking = false;
+            if (user.CanViewTracking.HasValue)
+                canViewTracking = user.CanViewTracking.Value;
+
+            var individualPricing = false;
+            if (user.IndividualPricing.HasValue)
+                individualPricing = user.IndividualPricing.Value;
+
+            var customerPricing = false;
+            if (user.CustomerPricing.HasValue)
+                customerPricing = user.CustomerPricing.Value;
+
+            var showPrice = false;
+            if (user.ShowPrice.HasValue)
+                showPrice = user.ShowPrice.Value;
+
+            var showActualQuantity = false;
+            if (user.ShowActualQuantity.HasValue)
+                showActualQuantity = user.ShowActualQuantity.Value;
+
+            var showNoQuantity = false;
+            if (user.ShowNoQuantity.HasValue)
+                showNoQuantity = user.ShowNoQuantity.Value;
+
+            var showHighlevelQuantity = false;
+            if (user.ShowHighlevelQuantity.HasValue)
+                showHighlevelQuantity = user.ShowHighlevelQuantity.Value;
+
+            var showMaxAllowedToViewQuantity = false;
+            if (user.ShowMaxAllowedToViewQuantity.HasValue)
+                showMaxAllowedToViewQuantity = user.ShowMaxAllowedToViewQuantity.Value;
 
 
             Username = userName;
@@ -123,7 +166,20 @@ namespace Bearings2000.Portal.Web.Areas.Identity.Pages.Account.Manage
             {
                 PhoneNumber = phoneNumber,
                 FirstName = firstName,
-                CanCreateEnquiry = canCreateEnquiry
+                Surname = surName,
+                IDNumber = idNumber,
+                CanCreateEnquiry = canCreateEnquiry,
+                CanViewDocuments = canViewDocuments,
+                CanViewTracking = canViewTracking,
+                IndividualPricing = individualPricing,
+                CustomerPricing = customerPricing,
+                ShowPrice = showPrice,
+                ShowActualQuantity = showActualQuantity,
+                ShowNoQuantity = showNoQuantity,
+                ShowHighlevelQuantity = showHighlevelQuantity,
+                ShowMaxAllowedToViewQuantity = showMaxAllowedToViewQuantity,
+
+
             };
         }
 
@@ -165,7 +221,19 @@ namespace Bearings2000.Portal.Web.Areas.Identity.Pages.Account.Manage
             }
             //custom properties
             user.FirstName = Input.FirstName;
+            user.Surname = Input.Surname;
+            user.IDNumber = Input.IDNumber;
             user.CanCreateEnquiry = Input.CanCreateEnquiry;
+            user.CanViewDocuments = Input.CanViewDocuments;
+            user.CanViewTracking = Input.CanViewTracking;
+            user.IndividualPricing = Input.IndividualPricing;
+            user.CustomerPricing = Input.CustomerPricing;
+            user.ShowPrice = Input.ShowPrice;
+            user.ShowActualQuantity = Input.ShowActualQuantity;
+            user.ShowNoQuantity = Input.ShowNoQuantity;
+            user.ShowHighlevelQuantity = Input.ShowHighlevelQuantity;
+            user.ShowMaxAllowedToViewQuantity = Input.ShowMaxAllowedToViewQuantity;
+            
             await _userManager.UpdateAsync(user);
 
 

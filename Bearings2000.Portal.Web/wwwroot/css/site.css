@@ -37,9 +37,13 @@ body {
 
 .backgroundcolor {
     background: rgba(45,64,104,0.8);
-    border-style: dashed;
+    border-style: solid;
     border-color: #fff;
     color: #fff;
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+    padding-top: 10px;
+  
 }
 
 .form-label {
