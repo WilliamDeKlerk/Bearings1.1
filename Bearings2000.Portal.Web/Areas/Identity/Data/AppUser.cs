@@ -40,6 +40,9 @@ namespace Bearings2000.Portal.Web.Areas.Identity.Data
         public int?   CustomerId { get; set; }
 
         public  int? UserStatusId { get; set; }
-      
+
+        [NotMapped]
+        public string? Password { get; set; }
+
     }
 }

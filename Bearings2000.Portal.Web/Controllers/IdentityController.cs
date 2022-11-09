@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using Bearings2000.Portal.Web.Data;
 using Microsoft.AspNetCore.Cors;
+using Bearings2000.Portal.Web.Migrations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Bearings2000.Portal.Web.Controllers
 {
@@ -22,12 +24,14 @@ namespace Bearings2000.Portal.Web.Controllers
         private readonly BearingsContext _context;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly ILogger<IdentityController> _logger;
         public IdentityController(BearingsContext context, UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager)
+            SignInManager<AppUser> signInManager, ILogger<IdentityController> logger)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
         }
        
         [HttpGet]
@@ -41,16 +45,23 @@ namespace Bearings2000.Portal.Web.Controllers
       
         [HttpPost]
        
-        public IActionResult PostUser(string values)
+        public async Task<IActionResult> PostUser(string values)
         {
             var newAppUser = new AppUser();
-            //JsonConvert.PopulateObject(values, newAppUser);
+            JsonConvert.PopulateObject(values, newAppUser);
 
-            //if (!TryValidateModel(newAppUser))
-            //    return BadRequest(ModelState);
+            var result = await _userManager.CreateAsync(newAppUser, newAppUser.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+            else if (result.Succeeded)
+            {
+                _logger.LogInformation("User created a new account with password.");
+                //do something to validate the user and send email
+            }
 
-            //_data.Employees.Add(newEmployee);
-            //_data.SaveChanges();
+
 
             return Ok();
         }
@@ -58,28 +69,34 @@ namespace Bearings2000.Portal.Web.Controllers
      
         [HttpPut]
       
-        public IActionResult PutUser(Guid key, string values)
+        public async Task<IActionResult> PutUser(Guid key, string values)
         {
-            System.Diagnostics.Debug.WriteLine(key.ToString());
-            //var userName =  _userManager.GetUserName(user);
-            // JsonConvert.PopulateObject(values, employee);
 
-            // if (!TryValidateModel(employee))
-            //     return BadRequest(ModelState);
-
-            // _data.SaveChanges();
+          
+            var appUser = await _userManager.FindByIdAsync(key.ToString());
+           
+            if (appUser == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            JsonConvert.PopulateObject(values, appUser);
+            await _userManager.UpdateAsync(appUser);
 
             return Ok();
         }
 
         [HttpDelete]
        
-        public void DeleteUser(Guid key)
+        public async Task DeleteUser(Guid key)
         {
             System.Diagnostics.Debug.WriteLine(key.ToString());
-            //var employee = _data.Employees.First(a => a.ID == key);
-            //_data.Employees.Remove(employee);
-            //_data.SaveChanges();
+            var appUser = await _userManager.FindByIdAsync(key.ToString());
+
+            if (appUser == null)
+            {
+                return;
+            }
+           await _userManager.DeleteAsync(appUser);
         }
 
     }

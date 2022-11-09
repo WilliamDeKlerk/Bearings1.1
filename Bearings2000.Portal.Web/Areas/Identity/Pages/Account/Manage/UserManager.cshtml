@@ -39,6 +39,8 @@
                     .Height(100))
                 .ColSpan(2)
             );
+        columns.AddFor(m => m.UserName).Visible(false);
+        columns.Add().Caption("Password").DataType(GridColumnDataType.String).DataField("Password").Visible(false).FormItem(i => i.Editor(e => e.TextBox())); ;
         columns.AddFor(m => m.CanCreateEnquiry).Visible(false).FormItem(i => i.Editor(e => e.CheckBox()));
         columns.AddFor(m => m.CanViewDocuments).Visible(false).FormItem(i => i.Editor(e => e.CheckBox()));
         columns.AddFor(m => m.CanViewTracking).Visible(false).FormItem(i => i.Editor(e => e.CheckBox()));
