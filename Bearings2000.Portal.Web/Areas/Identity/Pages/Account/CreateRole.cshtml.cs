@@ -1,11 +1,9 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Bearings2000.Portal.Web.Pages
+namespace Bearings2000.Portal.Web.Areas.Identity.Pages.Account
 {
-    [Authorize]
-    public class CockpitModel : PageModel
+    public class CreateRoleModel : PageModel
     {
         public void OnGet()
         {

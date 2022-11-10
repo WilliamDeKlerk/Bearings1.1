@@ -25,6 +25,7 @@ namespace Bearings2000.Portal.Web.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger<IdentityController> _logger;
+
         public IdentityController(BearingsContext context, UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager, ILogger<IdentityController> logger)
         {
@@ -32,19 +33,20 @@ namespace Bearings2000.Portal.Web.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+
         }
-       
+
         [HttpGet]
-     
+
         public object GetUsers(DataSourceLoadOptions loadOptions)
         {
 
             return DataSourceLoader.Load(_userManager.Users.ToList(), loadOptions);
         }
 
-      
+
         [HttpPost]
-       
+
         public async Task<IActionResult> PostUser(string values)
         {
             var newAppUser = new AppUser();
@@ -66,15 +68,15 @@ namespace Bearings2000.Portal.Web.Controllers
             return Ok();
         }
 
-     
+
         [HttpPut]
-      
+
         public async Task<IActionResult> PutUser(Guid key, string values)
         {
 
-          
+
             var appUser = await _userManager.FindByIdAsync(key.ToString());
-           
+
             if (appUser == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -86,7 +88,7 @@ namespace Bearings2000.Portal.Web.Controllers
         }
 
         [HttpDelete]
-       
+
         public async Task DeleteUser(Guid key)
         {
             System.Diagnostics.Debug.WriteLine(key.ToString());
@@ -96,8 +98,10 @@ namespace Bearings2000.Portal.Web.Controllers
             {
                 return;
             }
-           await _userManager.DeleteAsync(appUser);
+            await _userManager.DeleteAsync(appUser);
         }
+
+
 
     }
 }

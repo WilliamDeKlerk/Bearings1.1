@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Bearings2000.Portal.Web.Data;
 using Bearings2000.Portal.Web.Models;
 using Bearings2000.Portal.Web.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 
 var MyAllowSpecificOrigins = "CorsPolicy";
@@ -19,7 +20,8 @@ builder.Services.AddDbContext<BearingsContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<BearingsContext>();
+    .AddRoles<IdentityRole>().AddEntityFrameworkStores<BearingsContext>();//.AddRoles<IdentityRole>();
+
 
 builder.Services.AddTransient<IDataService, DataService>();
 
@@ -32,7 +34,12 @@ builder.Services
     .AddRazorPages()
     .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
-
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+//    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+//    {
+//        options.LoginPath = "/Identity/Account/Login";
+//        options.AccessDeniedPath = "/Identity/Account/Denied";
+//    });
 //builder.Services.AddCors(opt =>
 //{
 //    opt.AddPolicy("CorsPolicy", policy =>
